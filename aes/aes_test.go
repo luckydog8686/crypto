@@ -3,8 +3,8 @@ package aes
 import "testing"
 
 func TestEncrypt(t *testing.T) {
-	pass := []byte("helloworld")
-	str := "fuckyou bitch"
+	pass := []byte("helloworldddddddddddddddddddddddddddd")
+	str := "fuckyou bitchhelloworlddddddddddddddddddddddddddddhelloworlddddddddddddddddddddddddddddhelloworlddddddddddddddddddddddddddddhelloworlddddddddddddddddddddddddddddhelloworldddddddddddddddddddddddddddd"
 	enc,err:=Encrypt(str,pass)
 	if err!= nil {
 		t.Fatal(err)

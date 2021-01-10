@@ -26,8 +26,9 @@ func Encrypt(content string,pass []byte) (string, error) {
 	iv := cipherText[:blocksize]
 	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
 		log.Println(err.Error())
-		return "", nil
+		return "", err
 	}
+
 	mode := cipher.NewCBCEncrypter(block, iv)
 	mode.CryptBlocks(cipherText[blocksize:], rawData)
 	return hex.EncodeToString(cipherText), nil
@@ -77,12 +78,6 @@ func PKCS7UnPadding(origData []byte) []byte {
 }
 
 func GetPass(pass []byte) []byte {
-
-	aesPass := make([]byte, 0)
-	md5hash := md5.Sum([]byte(pass))
-	passLen := len(md5hash)
-	for i := 0; i < passLen; i++ {
-		aesPass = append(aesPass, md5hash[i])
-	}
-	return aesPass
+	 md5Hash:= md5.Sum([]byte(pass))
+	 return md5Hash[:]
 }
