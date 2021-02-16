@@ -18,10 +18,26 @@ func Sha256hash(message []byte) []byte {
 func Sign(privatekey *rsa.PrivateKey,hashed []byte)([]byte,error)  {
 	return rsa.SignPKCS1v15(rand.Reader,privatekey,crypto.SHA256,hashed[:])
 }
+func SignByPerm(pem ,hashed []byte)([]byte,error)  {
+	priv,err := GetPrivKeyFromPem(pem)
+	if err != nil {
+		return nil,err
+	}
+	return Sign(priv,hashed)
+}
 
 func Verify(publicKey *rsa.PublicKey,hashed,signature []byte)error{
 	return rsa.VerifyPKCS1v15(publicKey,crypto.SHA256,hashed[:],signature)
 }
+
+func VerifyByPerm(perm,hashed,signature []byte)error  {
+	pub,err:=GetPubKeyFromPem(perm)
+	if err !=nil{
+		return err
+	}
+	return Verify(pub,hashed,signature)
+}
+
 func GenerateKey() ([]byte,[]byte,error){
 	privateKey,err := rsa.GenerateKey(rand.Reader,2048)
 	if err != nil {
